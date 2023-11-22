@@ -24,13 +24,17 @@
 
         public bool deleteFlight(int flightNumber, string origin, string destination)
         {
-            if(numPassengers>maxSeats)
+            int index = Search(flightNumber);
+            if (index != -1)
             {
-                flightList[numPassengers] = new Flight(flightNumber, origin, destination);
-                numPassengers--;
-                return true;
-            }
-            return false;
+              for (int i = index; i < numPassengers - 1; i++)
+              {
+                flightList[i] = flightList[i + 1];
+              }
+              numPassengers--;
+              return true;
+           }
+           return false;
         }
 
         private int Search(int flightNumber)
@@ -55,23 +59,12 @@
             return null;
         }
 
-        public int printFoundFlight()
-        {
-            int find = Search(flightNumber);
-            if (find != -1)
-            {
-                return flightList[find].ToString();
-            }
-            return null;
-        }
-
-        public override int printAllFlights()
+        public void printAllFlights()
         {
             string s = "--- Flight List ---";
             for (int x = 0; x < numPassengers; x++)
             {
-                s=s+"\n" + flightList[x].ToString();
+                Console.WriteLine(flightList[x].ToString());
             }
-            return s;
         }
     }
